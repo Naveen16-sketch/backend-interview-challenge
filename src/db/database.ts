@@ -1,6 +1,4 @@
 import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
-import { Task, SyncQueueItem } from '../types';
 
 const sqlite = sqlite3.verbose();
 
@@ -48,7 +46,6 @@ export class Database {
     await this.run(createSyncQueueTable);
   }
 
-  // Helper methods
   run(sql: string, params: any[] = []): Promise<void> {
     return new Promise((resolve, reject) => {
       this.db.run(sql, params, (err) => {

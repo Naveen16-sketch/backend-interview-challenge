@@ -6,7 +6,7 @@ export interface Task {
   created_at: Date;
   updated_at: Date;
   is_deleted: boolean;
-  sync_status?: 'pending' | 'synced' | 'error';
+  sync_status?: 'pending' | 'in-progress' | 'synced' | 'error' | 'failed';
   server_id?: string;
   last_synced_at?: Date;
 }

@@ -8,34 +8,24 @@ export function createSyncRouter(db: Database): Router {
   const taskService = new TaskService(db);
   const syncService = new SyncService(db, taskService);
 
-  // Trigger manual sync
   router.post('/sync', async (req: Request, res: Response) => {
-    // TODO: Implement sync endpoint
-    // 1. Check connectivity first
-    // 2. Call syncService.sync()
-    // 3. Return sync result
-    res.status(501).json({ error: 'Not implemented' });
+    try {
+      const result = await syncService.sync();
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: 'Sync failed' });
+    }
   });
 
-  // Check sync status
   router.get('/status', async (req: Request, res: Response) => {
-    // TODO: Implement sync status endpoint
-    // 1. Get pending sync count
-    // 2. Get last sync timestamp
-    // 3. Check connectivity
-    // 4. Return status summary
-    res.status(501).json({ error: 'Not implemented' });
+    try {
+      const status = await syncService.getStatus();
+      res.json(status);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch sync status' });
+    }
   });
 
-  // Batch sync endpoint (for server-side)
-  router.post('/batch', async (req: Request, res: Response) => {
-    // TODO: Implement batch sync endpoint
-    // This would be implemented on the server side
-    // to handle batch sync requests from clients
-    res.status(501).json({ error: 'Not implemented' });
-  });
-
-  // Health check endpoint
   router.get('/health', async (req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date() });
   });
